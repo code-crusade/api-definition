@@ -13,55 +13,50 @@ paths:
       responses:
         '200':
           description: OK
-
-
-  /exercises/{exerciseId}:
+  '/exercises/{exerciseId}':
     get:
       summary: Gets the specified exercise
-      parameters: 
-      - name: exerciseId
-        in: path
-        required: true
-        schema:
-          type: integer
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200' :
+        '200':
           description: OK
-        '401' :
+        '401':
           description: User must be logged in to see this exercise
-        '403' :
+        '403':
           description: User is not allowed to see this exercise
-        '404' :
+        '404':
           description: Exercise does not exist
-
-
-  /exercises/{exerciseId}/submissions:
+  '/exercises/{exerciseId}/submissions':
     get:
       summary: Gets the list of submissions for the specified exercise
-      parameters: 
-      - name: exerciseId
-        in: path
-        required: true
-        schema:
-          type: integer
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200' :
+        '200':
           description: OK
-        '401' :
+        '401':
           description: User must be logged in to see the submissions.
-        '403' :
+        '403':
           description: User is not allowed to see the submissions.
-        '404' :
+        '404':
           description: Exercise does not exist
-
     post:
       summary: Submits the code as the current user's solution for the exercise
-      parameters: 
-      - name: exerciseId
-        in: path
-        required: true
-        schema:
-          type: integer
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
       requestBody:
         required: true
         content:
@@ -69,27 +64,25 @@ paths:
             schema:
               $ref: '#/components/schemas/RunnerArguments'
       responses:
-        '201' :
+        '201':
           description: Submission has been created
-        '400' :
+        '400':
           description: Submitted solution does not fit the exercise parameters
-        '401' :
+        '401':
           description: User must be logged in to submit solutions to the exercise
-        '403' :
+        '403':
           description: User is not allowed to post solutions for this exercise
-        '404' :
+        '404':
           description: Exercise does not exist
-
-
-  /exercises/{exerciseId}/test:
+  '/exercises/{exerciseId}/test':
     post:
       summary: Validate the code against the exercise's test suite
-      parameters: 
-      - name: exerciseId
-        in: path
-        required: true
-        schema:
-          type: integer
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
       requestBody:
         required: true
         content:
@@ -97,87 +90,82 @@ paths:
             schema:
               $ref: '#/components/schemas/RunnerArguments'
       responses:
-        '200' :
+        '200':
           description: The test suite has been executed
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CodeValidaationReport'
-        '400' :
+                $ref: '#/components/schemas/CodeValidationReport'
+        '400':
           description: Submitted solution does not fit the exercise parameters
-        '401' :
+        '401':
           description: User must be logged in to see this exercise
-        '403' :
+        '403':
           description: User is not allowed to see this exercise
-        '404' :
+        '404':
           description: Exercise does not exist
-
-
-  /exercises/{exerciseId}/submissions/{submissionId}:
+  '/exercises/{exerciseId}/submissions/{submissionId}':
     get:
       summary: Gets the list of submissions for the specified exercise
-      parameters: 
-      - name: exerciseId
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: submissionId
-        in: path
-        required: true
-        schema:
-          type: integer
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200' :
+        '200':
           description: OK
-        '401' :
+        '401':
           description: User must be logged in to see this submission
-        '403' :
+        '403':
           description: User is not allowed to see this submission
-        '404' :
+        '404':
           description: Submission does not exist
-
-  /exercises/{exerciseId}/submissions/{submissionId}/results:
+  '/exercises/{exerciseId}/submissions/{submissionId}/results':
     get:
       summary: Gets the results of the exercise validation for this submission
-      parameters: 
-      - name: exerciseId
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: submissionId
-        in: path
-        required: true
-        schema:
-          type: integer
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200' :
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CodeValidaationReport'
-        '401' :
+                $ref: '#/components/schemas/CodeValidationReport'
+        '401':
           description: User must be logged in to see the results
-        '403' :
+        '403':
           description: User is not allowed to see the results
-        '404' :
+        '404':
           description: Submission does not exist
-
-
   '/runner/{exerciseId}':
     post:
       deprecated: true
       summary: Runs provided code
       operationId: runCodeForExercise
       parameters:
-      - name: exerciseId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         required: true
         content:
@@ -195,10 +183,8 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-
-
 servers:
-- url: '//localhost:8080/'
+  - url: '//localhost:8080/'
 components:
   schemas:
     RunnerArguments:
@@ -211,17 +197,13 @@ components:
           description: language
           type: string
       example:
-        language: 'js'
+        language: js
         code: 'function main() { console.log("Hello World"); }'
-
-
-    CodeValidaationReport:
+    CodeValidationReport:
       type: object
       properties:
         todo:
           type: string
-
-
     RFC7807Body:
       type: object
       properties:
@@ -240,6 +222,60 @@ components:
           format: uri
       xml:
         name: problem
+    Exercise:
+      type: object
+      properties:
+        exerciseId:
+          type: integer
+        title:
+          type: object
+          additionalProperties:
+            type: string
+            example: "Titre de l'exercice"
+          required: ['fr']
+        description:
+          type: object
+          additionalProperties:
+            type: string
+            example: "Description de l'exercice"
+          required: ['fr']
+        supportedLanguages:
+          type: array
+          items:
+            type: string
+        codeTemplates:
+          type: object
+          additionalProperties:
+            type: string
+        # TODO : Validation tests?
+    ExerciseSubmission:
+      type: object
+      properties:
+        submissionId:
+          type: integer
+        exerciseId:
+          type: integer
+        userId:
+          type: integer
+        program:
+          $ref: '#/components/schemas/RunnerArguments'
+        #validationReport:
+        #  $ref: '#/components/schemas/CodeValidationReport'
+        createdAt:
+          type: string
+          format: date-time
+    User:
+      type: object
+      properties:
+        userId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
   responses:
     RFC7807Error:
       description: Api problem response
