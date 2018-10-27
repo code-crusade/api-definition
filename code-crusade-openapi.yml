@@ -10,6 +10,8 @@ paths:
     get:
       summary: Gets the full list of exercises
       operationId: exercisesIndex
+      security:
+        - authCookie: []
       responses:
         '200':
           description: OK
@@ -22,6 +24,8 @@ paths:
   '/exercises/{exerciseId}':
     get:
       summary: Gets the specified exercise
+      security:
+        - authCookie: []
       parameters:
         - name: exerciseId
           in: path
@@ -44,6 +48,8 @@ paths:
   '/exercises/{exerciseId}/submissions':
     get:
       summary: Gets the list of submissions for the specified exercise
+      security:
+        - authCookie: []
       parameters:
         - name: exerciseId
           in: path
@@ -67,6 +73,8 @@ paths:
           description: Exercise does not exist
     post:
       summary: Submits the code as the current user's solution for the exercise
+      security:
+        - authCookie: []
       parameters:
         - name: exerciseId
           in: path
@@ -93,6 +101,8 @@ paths:
   '/exercises/{exerciseId}/test':
     post:
       summary: Validate the code against the exercise's test suite
+      security:
+        - authCookie: []
       parameters:
         - name: exerciseId
           in: path
@@ -123,6 +133,8 @@ paths:
   '/exercises/{exerciseId}/submissions/{submissionId}':
     get:
       summary: Gets the list of submissions for the specified exercise
+      security:
+        - authCookie: []
       parameters:
         - name: exerciseId
           in: path
@@ -150,6 +162,8 @@ paths:
   '/exercises/{exerciseId}/submissions/{submissionId}/results':
     get:
       summary: Gets the results of the exercise validation for this submission
+      security:
+        - authCookie: []
       parameters:
         - name: exerciseId
           in: path
@@ -203,6 +217,58 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
+  '/auth/caslogin':
+    get:
+      summary: Provides a session cookie given a valid CAS Service ticket
+      # The service ticket can be used by the server to get user data from the SSO server
+      # Should probably be provided by spring-security or java-cas-client
+      externalDocs:
+        description : Apereo CAS protocol documentation
+        url: 'https://apereo.github.io/cas/4.2.x/protocol/CAS-Protocol.html'
+      security: [] # You shouldn't have to be logged in to login
+      tags: ['auth']
+      parameters:
+        - name: ticket
+          in: query
+          required: true
+          schema:
+            type: string
+            example: 'ST-12345678'
+      responses:
+        '200':
+          description: Successfully authenticated
+          headers: 
+            Set-Cookie:
+              schema: 
+                type: string
+                example: JSESSIONID=abcde12345;
+        # TODO : What to do if auth fails? 302?
+  '/auth/login':
+    post:
+      summary: Provides a session cookie given a username and password
+      security: [] # You shouldn't have to be logged in to login
+      tags: ['auth']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Successfully authenticated
+          headers: 
+            Set-Cookie:
+              schema: 
+                type: string
+                example: JSESSIONID=abcde12345;
+        '400':
+          description: Authentication failed
 servers:
   - url: '//localhost:8080/'
 components:
@@ -344,6 +410,11 @@ components:
         email:
           type: string
           format: email
+  securitySchemes:
+    authCookie:
+      type: apiKey
+      in: cookie
+      name: JSESSIONID
   responses:
     RFC7807Error:
       description: Api problem response
