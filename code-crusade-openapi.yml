@@ -13,6 +13,12 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Exercise'
   '/exercises/{exerciseId}':
     get:
       summary: Gets the specified exercise
@@ -25,6 +31,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+                schema:
+                  $ref: '#/components/schemas/Exercise'
         '401':
           description: User must be logged in to see this exercise
         '403':
@@ -43,6 +53,12 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExerciseSubmission'
         '401':
           description: User must be logged in to see the submissions.
         '403':
@@ -121,6 +137,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExerciseSubmission'
         '401':
           description: User must be logged in to see this submission
         '403':
@@ -202,8 +222,23 @@ components:
     CodeValidationReport:
       type: object
       properties:
-        todo:
-          type: string
+        exerciseId:
+          type: integer
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              testName:
+                type: string
+              passed:
+                type: boolean
+              inputParameters:
+                type: array
+                items: {}
+              expectedOutput: {}
+              actualOutput: {}
+              
     RFC7807Body:
       type: object
       properties:
@@ -239,6 +274,8 @@ components:
             type: string
             example: "Description de l'exercice"
           required: ['fr']
+        entryPoint:
+          $ref: '#/components/schemas/EntryPoint'
         supportedLanguages:
           type: array
           items:
@@ -264,6 +301,37 @@ components:
         createdAt:
           type: string
           format: date-time
+    EntryPoint:
+      type: object
+      properties:
+        className:
+          type: string
+        functionName:
+          type: string
+        functionParams:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                $ref: '#/components/schemas/SupportedType'
+        returnType:
+          $ref: '#/components/schemas/SupportedType'
+    SupportedType:
+      type: string
+      enum:
+        - boolean
+        - int
+        - float
+        - string
+        - object
+        - boolean[]
+        - int[]
+        - float[]
+        - string[]
+        - object[]
     User:
       type: object
       properties:
