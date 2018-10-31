@@ -392,12 +392,10 @@ components:
         - int
         - float
         - string
-        - object
         - boolean[]
         - int[]
         - float[]
         - string[]
-        - object[]
     User:
       type: object
       properties:
