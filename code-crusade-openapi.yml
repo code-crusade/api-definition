@@ -11,34 +11,34 @@ paths:
       summary: Gets the full list of exercises
       operationId: exercisesIndex
       security:
-        - authCookie: []
+      - authCookie: []
       responses:
         '200':
           description: OK
           content:
             application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Exercise'
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exercise'
   '/exercises/{exerciseId}':
     get:
       summary: Gets the specified exercise
       security:
-        - authCookie: []
+      - authCookie: []
       parameters:
-        - name: exerciseId
-          in: path
-          required: true
-          schema:
-            type: integer
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: OK
           content:
             application/json:
-                schema:
-                  $ref: '#/components/schemas/Exercise'
+              schema:
+                $ref: '#/components/schemas/Exercise'
         '401':
           description: User must be logged in to see this exercise
         '403':
@@ -49,13 +49,13 @@ paths:
     get:
       summary: Gets the list of submissions for the specified exercise
       security:
-        - authCookie: []
+      - authCookie: []
       parameters:
-        - name: exerciseId
-          in: path
-          required: true
-          schema:
-            type: integer
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: OK
@@ -74,13 +74,13 @@ paths:
     post:
       summary: Submits the code as the current user's solution for the exercise
       security:
-        - authCookie: []
+      - authCookie: []
       parameters:
-        - name: exerciseId
-          in: path
-          required: true
-          schema:
-            type: integer
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
       requestBody:
         required: true
         content:
@@ -102,13 +102,13 @@ paths:
     post:
       summary: Validate the code against the exercise's test suite
       security:
-        - authCookie: []
+      - authCookie: []
       parameters:
-        - name: exerciseId
-          in: path
-          required: true
-          schema:
-            type: integer
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
       requestBody:
         required: true
         content:
@@ -134,18 +134,18 @@ paths:
     get:
       summary: Gets the list of submissions for the specified exercise
       security:
-        - authCookie: []
+      - authCookie: []
       parameters:
-        - name: exerciseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: submissionId
-          in: path
-          required: true
-          schema:
-            type: integer
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: submissionId
+        in: path
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: OK
@@ -163,18 +163,18 @@ paths:
     get:
       summary: Gets the results of the exercise validation for this submission
       security:
-        - authCookie: []
+      - authCookie: []
       parameters:
-        - name: exerciseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: submissionId
-          in: path
-          required: true
-          schema:
-            type: integer
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: submissionId
+        in: path
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: OK
@@ -194,12 +194,12 @@ paths:
       summary: Runs provided code
       operationId: runCodeForExercise
       parameters:
-        - name: exerciseId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: exerciseId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         required: true
         content:
@@ -228,18 +228,18 @@ paths:
       security: [] # You shouldn't have to be logged in to login
       tags: ['auth']
       parameters:
-        - name: ticket
-          in: query
-          required: true
-          schema:
-            type: string
-            example: 'ST-12345678'
+      - name: ticket
+        in: query
+        required: true
+        schema:
+          type: string
+          example: 'ST-12345678'
       responses:
         '200':
           description: Successfully authenticated
-          headers: 
+          headers:
             Set-Cookie:
-              schema: 
+              schema:
                 type: string
                 example: JSESSIONID=abcde12345;
         # TODO : What to do if auth fails? 302?
@@ -253,24 +253,19 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                password:
-                  type: string
+              $ref: '#/components/schemas/UserPass'
       responses:
         '200':
           description: Successfully authenticated
-          headers: 
+          headers:
             Set-Cookie:
-              schema: 
+              schema:
                 type: string
                 example: JSESSIONID=abcde12345;
         '400':
           description: Authentication failed
 servers:
-  - url: '//localhost:8080/'
+- url: '//localhost:8080/'
 components:
   schemas:
     RunnerArguments:
@@ -284,7 +279,7 @@ components:
           type: string
       example:
         language: js
-        code: 'function main() { console.log("Hello World"); }'
+        code: 'function main() { console.log(''Hello World''); }'
     CodeValidationReport:
       type: object
       properties:
@@ -304,7 +299,7 @@ components:
                 items: {}
               expectedOutput: {}
               actualOutput: {}
-              
+
     RFC7807Body:
       type: object
       properties:
@@ -388,14 +383,14 @@ components:
     SupportedType:
       type: string
       enum:
-        - boolean
-        - int
-        - float
-        - string
-        - boolean[]
-        - int[]
-        - float[]
-        - string[]
+      - boolean
+      - int
+      - float
+      - string
+      - boolean[]
+      - int[]
+      - float[]
+      - string[]
     User:
       type: object
       properties:
@@ -408,6 +403,13 @@ components:
         email:
           type: string
           format: email
+    UserPass:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
   securitySchemes:
     authCookie:
       type: apiKey
