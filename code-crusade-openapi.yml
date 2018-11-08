@@ -223,7 +223,7 @@ paths:
       # The service ticket can be used by the server to get user data from the SSO server
       # Should probably be provided by spring-security or java-cas-client
       externalDocs:
-        description : Apereo CAS protocol documentation
+        description: Apereo CAS protocol documentation
         url: 'https://apereo.github.io/cas/4.2.x/protocol/CAS-Protocol.html'
       security: [] # You shouldn't have to be logged in to login
       tags: ['auth']
@@ -321,8 +321,9 @@ components:
     Exercise:
       type: object
       properties:
-        exerciseId:
+        id:
           type: integer
+          readOnly: true
         title:
           type: object
           additionalProperties:
@@ -335,41 +336,47 @@ components:
             type: string
             example: "Description de l'exercice"
           required: ['fr']
+        difficulty:
+          $ref: '#/components/schemas/Difficulties'
         entryPoint:
-          $ref: '#/components/schemas/EntryPoint'
+          $ref: '#/components/schemas/Template'
         supportedLanguages:
           type: array
           items:
             type: string
-        codeTemplates:
-          type: object
-          additionalProperties:
-            type: string
-        # TODO : Validation tests?
+        unitTests:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnitTest'
+        template:
+          $ref: '#/components/schemas/Template'
     ExerciseSubmission:
       type: object
       properties:
-        submissionId:
+        id:
           type: integer
+          readOnly: true
         exerciseId:
           type: integer
         userId:
           type: integer
-        program:
-          $ref: '#/components/schemas/RunnerArguments'
+        code:
+          type: string
+        language:
+          $ref: '#/components/schemas/'
         #validationReport:
         #  $ref: '#/components/schemas/CodeValidationReport'
         createdAt:
           type: string
           format: date-time
-    EntryPoint:
+    Template:
       type: object
       properties:
         className:
           type: string
         functionName:
           type: string
-        functionParams:
+        args:
           type: array
           items:
             type: object
@@ -378,23 +385,33 @@ components:
                 type: string
               type:
                 $ref: '#/components/schemas/SupportedType'
-        returnType:
+        functionReturnValue:
+          $ref: '#/components/schemas/AnyValue'
+        functionReturnType:
           $ref: '#/components/schemas/SupportedType'
+        prependedCode:
+          type: object
+          additionalProperties:
+            type: string
+        appendedCode:
+          type: object
+          additionalProperties:
+            type: string
     SupportedType:
       type: string
       enum:
-      - boolean
-      - int
-      - float
-      - string
-      - boolean[]
-      - int[]
-      - float[]
-      - string[]
+      - BOOLEAN
+      - INT
+      - FLOAT
+      - STRING
+      - BOOLEAN[]
+      - INT[]
+      - FLOAT[]
+      - STRING[]
     User:
       type: object
       properties:
-        userId:
+        id:
           type: integer
         firstName:
           type: string
@@ -410,6 +427,79 @@ components:
           type: string
         password:
           type: string
+    SupportedLanguages:
+      description: Languages supported by the api
+      type: string
+      enum:
+      - Cpp
+      - Java
+      - Javascript
+      - Python
+    Difficulties:
+      description: Exercise difficulty range
+      type: string
+      enum:
+      - EASY
+      - MEDIUM
+      - HARD
+    Semesters:
+      description: Semester values.
+      type: string
+      enum:
+      - FALL
+      - WINTER
+      - SUMMER
+    AnyValue:
+      description: Type encompassing any value type
+      nullable: true
+    UnitTest:
+      description: A simple input-ouput unit test
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        input:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestInput'
+        outputValue:
+          $ref: '#/components/schemas/AnyValue'
+    TestInput:
+      description: A test input and its type
+      type: object
+      properties:
+        inputType:
+          $ref: '#/components/schemas/SupportedType'
+        inputValue:
+          $ref: '#/components/schemas/AnyValue'
+    Group:
+      description: Group of students
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        groupNumber:
+          type: integer
+        class:
+          type: string
+        semester:
+          $ref: '#/components/schemas/Semesters'
+        year:
+          type: number
+        students:
+          type: array
+          items:
+            $ref: '#/components/schemas/Student'
+    Student:
+      description: A student user
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            accessCode:
+              type: string
   securitySchemes:
     authCookie:
       type: apiKey
