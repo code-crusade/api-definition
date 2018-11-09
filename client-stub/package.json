@@ -1,0 +1,26 @@
+{
+  "name": "client-stub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-client": "openapi-generator generate -i ../code-crusade-openapi.yml -g typescript-fetch -o generated-sources/api --additional-properties=\"supportsES6=true,withInterfaces=true\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Microsoft/TypeScript-Node-Starter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Microsoft/TypeScript-Node-Starter/issues"
+  },
+  "homepage": "https://github.com/Microsoft/TypeScript-Node-Starter#readme",
+  "dependencies": {
+    "typescript": "^3.1.6"
+  },
+  "devDependencies": {
+    "@harmowatch/openapi-generator-cli": "0.0.3-3.3.2"
+  }
+}

@@ -404,10 +404,10 @@ components:
       - INT
       - FLOAT
       - STRING
-      - BOOLEAN[]
-      - INT[]
-      - FLOAT[]
-      - STRING[]
+      - BOOLEAN_ARR
+      - INT_ARR
+      - FLOAT_ARR
+      - STRING_ARR
     User:
       type: object
       properties:
