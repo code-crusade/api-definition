@@ -21,6 +21,30 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Exercise'
+    post:
+      summary: Creates a new exercise
+      operationId: exercisesAdd
+      security:
+        - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exercise'
+      responses:
+        '201':
+          description: Exercise has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exercise'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to submit solutions to the exercise
+        '403':
+          description: User is not allowed to create a new exercise
   '/exercises/{exerciseId}':
     get:
       summary: Gets the specified exercise
@@ -86,7 +110,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RunnerArguments'
+              $ref: '#/components/schemas/ExerciseSubmission'
       responses:
         '201':
           description: Submission has been created
@@ -188,6 +212,133 @@ paths:
           description: User is not allowed to see the results
         '404':
           description: Submission does not exist
+  /groups:
+    get:
+      summary: Gets the full list of groups
+      operationId: groupsBrowse
+      security:
+        - authCookie: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+    post:
+      summary: Creates a new group
+      operationId: groupsAdd
+      security:
+        - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '201':
+          description: Group has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to create new group
+        '403':
+          description: User is not allowed to create a new group
+    put:
+      summary: Edits an existing group
+      operationId: groupsEdit
+      security:
+        - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '200':
+          description: Group has been modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to edit group
+        '403':
+          description: User is not allowed to edit this group
+  /users:
+    get:
+      summary: Gets the full list of users
+      operationId: usersBrowse
+      security:
+        - authCookie: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Creates a new user
+      operationId: usersAdd
+      security:
+        - authCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+        '401':
+          description: User must be logged in to create new user
+        '403':
+          description: User is not allowed to create a new user
+  '/users/{userId}':
+    get:
+      summary: Gets the specified user
+      operationId: usersRead
+      security:
+        - authCookie: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: User must be logged in to see this user
+        '403':
+          description: User is not allowed to see this user
+        '404':
+          description: User does not exist
   '/runner/{exerciseId}':
     post:
       deprecated: true
@@ -324,7 +475,7 @@ components:
         fr:
           type: string
         en:
-          type: stirng
+          type: string
       required:
         - fr
     Exercise:
@@ -355,7 +506,7 @@ components:
         - description
         - difficulty
         - template
-        - sampleUnitTests
+        - sampleTestCases
     ExerciseSubmission:
       type: object
       properties:
@@ -391,12 +542,7 @@ components:
         params:
           type: array
           items:
-            type: object
-            properties:
-              name:
-                type: string
-              type:
-                $ref: '#/components/schemas/SupportedType'
+            $ref: '#/components/schemas/Parameter'
         functionReturnValue:
           $ref: '#/components/schemas/AnyValue'
         functionReturnType:
@@ -423,10 +569,12 @@ components:
       - INT
       - FLOAT
       - STRING
+      - CHAR
       - BOOLEAN_ARRAY
       - INT_ARRAY
       - FLOAT_ARRAY
       - STRING_ARRAY
+      - CHAR_ARRAY
     User:
       type: object
       properties:
@@ -461,10 +609,10 @@ components:
       description: Languages supported by the api
       type: string
       enum:
-      - Cpp
-      - Java
-      - Javascript
-      - Python
+      - cpp
+      - java
+      - javascript
+      - python
     Difficulties:
       description: Exercise difficulty range
       type: string
@@ -519,6 +667,17 @@ components:
       required:
         - type
         - value
+    Parameter:
+      description: A parameter
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/SupportedType'
+      required:
+        - type
+        - name
     Group:
       description: Group of students
       type: object
@@ -538,6 +697,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Student'
+        archived:
+          type: boolean
       required:
         - id
         - groupNumber
@@ -545,6 +706,7 @@ components:
         - semester
         - year
         - students
+        - archived
     Student:
       description: A student user
       type: object
