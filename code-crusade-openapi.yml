@@ -770,13 +770,13 @@ components:
           readOnly: true
         groupNumber:
           type: integer
-        class:
+        course:
           type: string
         semester:
           $ref: '#/components/schemas/Semesters'
         year:
           type: number
-        students:
+        students: 
           type: array
           items:
             $ref: '#/components/schemas/Student'
@@ -785,7 +785,7 @@ components:
       required:
         - id
         - groupNumber
-        - class
+        - course
         - semester
         - year
         - students
