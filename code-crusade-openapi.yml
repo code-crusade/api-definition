@@ -479,6 +479,10 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/TestCaseResult'
+          required:
+            - assertions
+            - completed
+            - output
         stderr:
           type: string
         stdout:
@@ -496,7 +500,7 @@ components:
         - result
         - stderr
         - stdout
-        - timeOut
+        - timedOut
         - token
         - executionTime
     TestCaseResult:
