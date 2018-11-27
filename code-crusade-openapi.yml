@@ -25,7 +25,7 @@ paths:
       summary: Creates a new exercise
       operationId: exercisesAdd
       security:
-        - authCookie: []
+      - authCookie: []
       requestBody:
         required: true
         content:
@@ -217,7 +217,7 @@ paths:
       summary: Gets the full list of groups
       operationId: groupsBrowse
       security:
-        - authCookie: []
+      - authCookie: []
       responses:
         '200':
           description: OK
@@ -231,7 +231,7 @@ paths:
       summary: Creates a new group
       operationId: groupsAdd
       security:
-        - authCookie: []
+      - authCookie: []
       requestBody:
         required: true
         content:
@@ -255,7 +255,7 @@ paths:
       summary: Edits an existing group
       operationId: groupsEdit
       security:
-        - authCookie: []
+      - authCookie: []
       requestBody:
         required: true
         content:
@@ -280,7 +280,7 @@ paths:
       summary: Gets the full list of users
       operationId: usersBrowse
       security:
-        - authCookie: []
+      - authCookie: []
       responses:
         '200':
           description: OK
@@ -294,7 +294,7 @@ paths:
       summary: Creates a new user
       operationId: usersAdd
       security:
-        - authCookie: []
+      - authCookie: []
       requestBody:
         required: true
         content:
@@ -319,13 +319,13 @@ paths:
       summary: Gets the specified user
       operationId: usersRead
       security:
-        - authCookie: []
+      - authCookie: []
       parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: integer
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: OK
@@ -480,9 +480,9 @@ components:
               items:
                 $ref: '#/components/schemas/TestCaseResult'
           required:
-            - assertions
-            - completed
-            - output
+          - assertions
+          - completed
+          - output
         stderr:
           type: string
         stdout:
@@ -494,15 +494,15 @@ components:
         executionTime:
           type: integer
       required:
-        - exerciseId
-        - exitCode
-        - message
-        - result
-        - stderr
-        - stdout
-        - timedOut
-        - token
-        - executionTime
+      - exerciseId
+      - exitCode
+      - message
+      - result
+      - stderr
+      - stdout
+      - timedOut
+      - token
+      - executionTime
     TestCaseResult:
       type: object
       properties:
@@ -515,9 +515,9 @@ components:
           items:
             $ref: '#/components/schemas/AssertionResult'
       required:
-        - text
-        - passed
-        - items
+      - text
+      - passed
+      - items
     AssertionResult:
       type: object
       properties:
@@ -535,9 +535,9 @@ components:
               message:
                 type: string
       required:
-        - text
-        - passed
-        - items
+      - text
+      - passed
+      - items
     RFC7807Body:
       type: object
       properties:
@@ -564,7 +564,7 @@ components:
         en:
           type: string
       required:
-        - fr
+      - fr
     Exercise:
       type: object
       properties:
@@ -588,12 +588,12 @@ components:
           items:
             $ref: '#/components/schemas/TestCase'
       required:
-        - id
-        - title
-        - description
-        - difficulty
-        - template
-        - sampleTestCases
+      - id
+      - title
+      - description
+      - difficulty
+      - template
+      - sampleTestCases
     ExerciseSubmission:
       type: object
       properties:
@@ -612,11 +612,11 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - exerciseId
-        - userId
-        - code
-        - language
+      - id
+      - exerciseId
+      - userId
+      - code
+      - language
     Template:
       type: object
       properties:
@@ -641,12 +641,12 @@ components:
           additionalProperties:
             type: string
       required:
-        - functionName
-        - functionReturnValue
-        - params
-        - functionReturnType
-        - prependedCode
-        - appendedCode
+      - functionName
+      - functionReturnValue
+      - params
+      - functionReturnType
+      - prependedCode
+      - appendedCode
     SupportedType:
       type: string
       enum:
@@ -675,11 +675,11 @@ components:
         password:
           type: string
       required:
-        - id
-        - firstName
-        - lastName
-        - email
-        - password
+      - id
+      - firstName
+      - lastName
+      - email
+      - password
     Credentials:
       type: object
       properties:
@@ -688,8 +688,8 @@ components:
         password:
           type: string
       required:
-        - username
-        - password
+      - username
+      - password
     SupportedLanguages:
       description: Languages supported by the api
       type: string
@@ -726,8 +726,8 @@ components:
           items:
             $ref: '#/components/schemas/Assertion'
       required:
-        - it
-        - assertions
+      - it
+      - assertions
     Assertion:
       description: An assertion to be included in a test
       type: object
@@ -739,8 +739,8 @@ components:
         expectedOutput:
           $ref: '#/components/schemas/Argument'
       required:
-        - inputArguments
-        - expectedOutput
+      - inputArguments
+      - expectedOutput
     Argument:
       description: An argument
       type: object
@@ -750,8 +750,8 @@ components:
         value:
           $ref: '#/components/schemas/AnyValue'
       required:
-        - type
-        - value
+      - type
+      - value
     Parameter:
       description: A parameter
       type: object
@@ -761,8 +761,8 @@ components:
         type:
           $ref: '#/components/schemas/SupportedType'
       required:
-        - type
-        - name
+      - type
+      - name
     Group:
       description: Group of students
       type: object
@@ -779,25 +779,19 @@ components:
         year:
           type: number
         students:
-          readOnly: true
           type: array
           items:
             $ref: '#/components/schemas/Student'
-        studentsIds:
-          writeOnly: true
-          type: array
-          items:
-            type: number
         archived:
           type: boolean
       required:
-        - id
-        - groupNumber
-        - course
-        - semester
-        - year
-        - students
-        - archived
+      - id
+      - groupNumber
+      - course
+      - semester
+      - year
+      - students
+      - archived
     Student:
       description: A student user
       type: object
@@ -815,17 +809,15 @@ components:
         totalExercisesDone:
           type: number
       required:
-        - accessCode
-        - firstName
-        - lastName
-        - type
+      - accessCode
+      - firstName
+      - lastName
+      - type
   securitySchemes:
-#    googleOAuth:
-#      type: oauth2
-#      flows:
-#        authorizationCode:
-#          authorizationUrl: "/oauth2/authorize"
-#          tokenUrl: "/oauth/token"
+    authCookie:
+      type: apiKey
+      in: cookie
+      name: JSESSIONID
   responses:
     RFC7807Error:
       description: Api problem response
