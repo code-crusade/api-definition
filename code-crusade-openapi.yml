@@ -580,17 +580,20 @@ components:
         template:
           $ref: '#/components/schemas/Template'
         fixtures:
-          type: array
-          items:
-            type: object
-            properties:
-              language:
-                $ref: '#/components/schemas/SupportedLanguage'
-              fixture:
-                type: string
-            required:
-              - language
-              - fixture
+          type: object
+          properties:
+            cpp:
+              type: array
+              items: string
+            python:
+              type: array
+              items: string
+            java:
+              type: array
+              items: string
+            javascript:
+              type: array
+              items: string
         sampleTestCases:
           type: array
           items:
