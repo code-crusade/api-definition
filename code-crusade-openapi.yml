@@ -579,10 +579,18 @@ components:
           $ref: '#/components/schemas/Difficulties'
         template:
           $ref: '#/components/schemas/Template'
-        supportedLanguages:
+        fixtures:
           type: array
           items:
-            type: string
+            type: object
+            properties:
+              language:
+                $ref: '#/components/schemas/SupportedLanguage'
+              fixture:
+                type: string
+            required:
+              - language
+              - fixture
         sampleTestCases:
           type: array
           items:
