@@ -338,6 +338,17 @@ paths:
           description: User is not allowed to see this user
         '404':
           description: User does not exist
+  '/google-login':
+    get:
+      summary: Redirects to the google login page according to the Authorization Code grant type flow.
+      responses:
+        '302':
+          description: Redirect to the google auth uri.
+          headers:
+            Location:
+              schema:
+                type: string
+              description: Standard redirect URI.
 servers:
 - url: '//localhost:8080/'
 components:
