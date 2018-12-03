@@ -580,9 +580,6 @@ components:
     Template:
       type: object
       properties:
-        className:
-          type: string
-          maxLength: 50
         functionName:
           type: string
           maxLength: 50
@@ -596,12 +593,12 @@ components:
           type: object
           additionalProperties:
             type: string
-            maxLength: 5000
+            maxLength: 1000
         appendedCode:
           type: object
           additionalProperties:
             type: string
-            maxLength: 5000
+            maxLength: 1000
       required:
       - functionName
       - params
