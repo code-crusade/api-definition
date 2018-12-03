@@ -6,7 +6,7 @@ info:
   termsOfService: 'urn:tos'
   contact: {}
 security:
-  - bearerAuth: []
+- bearerAuth: []
 paths:
   /exercises:
     get:
@@ -507,16 +507,20 @@ components:
           properties:
             cpp:
               type: array
-              items: string
+              items:
+                type: string
             python:
               type: array
-              items: string
+              items:
+                type: string
             java:
               type: array
-              items: string
+              items:
+                type: string
             javascript:
               type: array
-              items: string
+              items:
+                type: string
         sampleTestCases:
           type: array
           items:
@@ -527,6 +531,7 @@ components:
       - description
       - difficulty
       - template
+      - fixtures
       - sampleTestCases
     ExerciseSubmission:
       type: object
