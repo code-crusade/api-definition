@@ -567,8 +567,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Parameter'
-        functionReturnValue:
-          $ref: '#/components/schemas/AnyValue'
         functionReturnType:
           $ref: '#/components/schemas/SupportedType'
         prependedCode:
@@ -581,7 +579,6 @@ components:
             type: string
       required:
       - functionName
-      - functionReturnValue
       - params
       - functionReturnType
       - prependedCode
