@@ -517,21 +517,13 @@ components:
           type: object
           properties:
             cpp:
-              type: array
-              items:
-                type: string
+              type: string
             python:
-              type: array
-              items:
-                type: string
+              type: string
             java:
-              type: array
-              items:
-                type: string
+              type: string
             javascript:
-              type: array
-              items:
-                type: string
+              type: string
         sampleTestCases:
           type: array
           items:
