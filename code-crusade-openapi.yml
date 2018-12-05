@@ -552,7 +552,9 @@ components:
           $ref: '#/components/schemas/Template'
         fixtures:
           writeOnly: true
-          $ref: '#/components/schemas/Fixture'
+          type: array
+          items:
+            $ref: '#/components/schemas/Fixture'
         sampleTestCases:
           type: array
           items:
@@ -567,19 +569,19 @@ components:
       - sampleTestCases
     Fixture:
       type: object
-        properties:
-          cpp:
-            type: string
-            maxLength: 5000
-          python:
-            type: string
-            maxLength: 5000
-          java:
-            type: string
-            maxLength: 5000
-          javascript:
-            type: string
-            maxLength: 5000
+      properties:
+        cpp:
+          type: string
+          maxLength: 5000
+        python:
+          type: string
+          maxLength: 5000
+        java:
+          type: string
+          maxLength: 5000
+        javascript:
+          type: string
+          maxLength: 5000
     ExerciseSubmission:
       type: object
       properties:
