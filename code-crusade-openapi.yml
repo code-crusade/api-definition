@@ -677,6 +677,8 @@ components:
       properties:
         id:
           type: integer
+        accessCode:
+          type: string
         firstName:
           type: string
           maxLength: 100
@@ -692,7 +694,7 @@ components:
         - firstName
         - lastName
         - email
-        - password
+        - accessCode
     SupportedLanguages:
       description: Languages supported by the api
       type: string
@@ -806,7 +808,7 @@ components:
           type: integer
           readOnly: true
         accessCode:
-          type: integer
+          type: string
         firstName:
           type: string
           maxLength: 100
