@@ -577,9 +577,8 @@ components:
           $ref: '#/components/schemas/Template'
         fixtures:
           writeOnly: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Fixture'
+          allOf:
+          - $ref: '#/components/schemas/Fixture'
         sampleTestCases:
           type: array
           items:
